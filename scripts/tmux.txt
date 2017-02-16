@@ -1,0 +1,19 @@
+# creating the terminals
+tmux new -s day
+tmux new -s night
+tmux new -s sylvan
+
+# attaching to terminals
+tmux a -t day
+tmux a -t night
+tmux a -t sylvan
+
+# detaching from terminal
+Ctrl b + d
+
+# killing terminals
+tmux kill-session -t day
+tmux kill-session -t night
+
+# listing terminals
+tmux ls

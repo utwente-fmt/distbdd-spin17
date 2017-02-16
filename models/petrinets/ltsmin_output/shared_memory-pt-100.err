@@ -1,0 +1,19 @@
+pnml2lts-sym, 0.000: Exploration order is chain
+pnml2lts-sym, 0.000: Saturation strategy is sat-like
+pnml2lts-sym, 0.000: Guided search strategy is unguided
+pnml2lts-sym, 0.000: Attractor strategy is default
+pnml2lts-sym, 0.000: opening /home/oortwijn/distdd/models/petrinets/originals/shared_memory-pt-100.pnml
+pnml2lts-sym, 0.548: Petri net has 10301 places, 20100 transitions and 80000 arcs
+pnml2lts-sym, 0.548: There are 0 safe places
+pnml2lts-sym, 1.470: Petri net /home/oortwijn/distdd/models/petrinets/originals/shared_memory-pt-100.pnml analyzed
+pnml2lts-sym, 1.648: Loading Petri net took 1.650 real 1.450 user 0.150 sys
+pnml2lts-sym, 1.648: Initializing regrouping layer
+pnml2lts-sym, 1.681: Regroup specification: f,rs,hf
+pnml2lts-sym, 1.681: Regroup FORCE
+pnml2lts-sym, 9.451: Regroup Row Sort
+pnml2lts-sym, 20.999: Reqroup Horizontal Flip
+pnml2lts-sym, 21.025: Regrouping: 20100->20100 groups
+pnml2lts-sym, 25.677: Regrouping took 24.030 real 23.790 user 0.260 sys
+pnml2lts-sym, 25.678: state vector length is 10301; there are 20100 groups
+pnml2lts-sym, 25.678: Creating a Sylvan domain.
+/cm/local/apps/slurm/var/spool/job1004817/slurm_script: line 9: 16271 Segmentation fault      pnml2lts-sym $MODELPATH/$1 --when -rf,rs,hf --order=chain --saturation=sat-like --sat-granularity=5 --vset=sylvan --sylvan-tablesize=29 --sylvan-cachesize=29 --lace-workers=16 --save-reachable --save-transitions=transitions/$3.bdd --sylvan-bits=$2

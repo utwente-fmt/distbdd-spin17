@@ -1,0 +1,20 @@
+pnml2lts-sym, 0.000: Exploration order is chain
+pnml2lts-sym, 0.000: Saturation strategy is sat-like
+pnml2lts-sym, 0.000: Guided search strategy is unguided
+pnml2lts-sym, 0.000: Attractor strategy is default
+pnml2lts-sym, 0.000: opening /home/oortwijn/distdd/models/petrinets/originals/2D8_gradient_50x50_100.pnml
+pnml2lts-sym, 0.228: Petri net has 2500 places, 19404 transitions and 38808 arcs
+pnml2lts-sym, 0.228: There are 0 safe places
+pnml2lts-sym, 0.573: Petri net /home/oortwijn/distdd/models/petrinets/originals/2D8_gradient_50x50_100.pnml analyzed
+pnml2lts-sym, 0.669: Loading Petri net took 0.670 real 0.590 user 0.080 sys
+pnml2lts-sym, 0.669: Initializing regrouping layer
+pnml2lts-sym, 0.676: Regroup specification: f,rs,hf
+pnml2lts-sym, 0.676: Regroup FORCE
+pnml2lts-sym, 1125.567: Regroup Row Sort
+pnml2lts-sym, 1128.598: Reqroup Horizontal Flip
+pnml2lts-sym, 1128.602: Regrouping: 19404->19404 groups
+pnml2lts-sym, 1129.708: Regrouping took 1129.030 real 1129.840 user 0.060 sys
+pnml2lts-sym, 1129.708: state vector length is 2500; there are 19404 groups
+pnml2lts-sym, 1129.710: Creating a Sylvan domain.
+pnml2lts-sym, 1131.928: Using GBgetTransitionsShortR2W as next-state function
+/cm/local/apps/slurm/var/spool/job1005467/slurm_script: line 9: 25259 Segmentation fault      pnml2lts-sym $MODELPATH/$1 --when -rf,rs,hf --order=chain --saturation=sat-like --sat-granularity=5 --vset=sylvan --sylvan-tablesize=29 --sylvan-cachesize=29 --lace-workers=16 --save-reachable --save-transitions=transitions/$3.bdd --sylvan-bits=$2

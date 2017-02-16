@@ -1,0 +1,14 @@
+prom2lts-sym, 0.000: Exploration order is bfs-prev
+prom2lts-sym, 0.000: Saturation strategy is none
+prom2lts-sym, 0.000: Guided search strategy is unguided
+prom2lts-sym, 0.000: Attractor strategy is default
+prom2lts-sym, 0.000: Precompiled SpinS module initialized
+prom2lts-sym, 0.000: opening /home/oortwijn/distdd/models/promela/originals/p248.pml
+Exception in thread "main" java.lang.AssertionError: Cannot dynamically bind fact to the run expressions in presence of arguments of type channel.
+Change the proctype's arguments or unroll the loop with run expressions in the model.
+	at spins.promela.compiler.ltsmin.LTSminTreeWalker.bindArguments(LTSminTreeWalker.java:783)
+	at spins.promela.compiler.ltsmin.LTSminTreeWalker.bindByReferenceCalls(LTSminTreeWalker.java:744)
+	at spins.promela.compiler.ltsmin.LTSminTreeWalker.createLTSminModel(LTSminTreeWalker.java:181)
+	at spins.Compile.writeLTSMinFiles(Compile.java:383)
+	at spins.Compile.main(Compile.java:285)
+prom2lts-sym, 0.277, file ../pins-lib/prom-pins.c, line 143: assertion "ret == 0" failed: Command failed with exit code 256: spins '/home/oortwijn/distdd/models/promela/originals/p248.pml'\LTSmin not installed? Try running ltsmin/src/script/spins manually.

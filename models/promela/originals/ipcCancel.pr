@@ -1,0 +1,168 @@
+/*
+ * Copyright (c) 1996 The University of Utah and
+ * the Computer Systems Laboratory at the University of Utah (CSL).
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify and distribute this software is hereby
+ * granted provided that (1) source code retains these copyright, permission,
+ * and disclaimer notices, and (2) redistributions including binaries
+ * reproduce the notices in supporting documentation, and (3) all advertising
+ * materials mentioning features or use of this software display the following
+ * acknowledgement: ``This product includes software developed by the
+ * Computer Systems Laboratory at the University of Utah.''
+ *
+ * THE UNIVERSITY OF UTAH AND CSL ALLOW FREE USE OF THIS SOFTWARE IN ITS "AS
+ * IS" CONDITION.  THE UNIVERSITY OF UTAH AND CSL DISCLAIM ANY LIABILITY OF
+ * ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ *
+ * CSL requests users of this software to return to csl-dist@cs.utah.edu any
+ * improvements that they make and grant CSL redistribution rights.
+ */
+/*
+ * Ipc cancel ops
+ */
+
+#ifndef _IPC_CANCEL_PR_
+#define _IPC_CANCEL_PR_
+
+#define defineIpcCancelLocals() \
+  Thread ipcCancel_server;	\
+  Thread ipcCancel_client	
+
+#define threadIpcCanceled(cur_th)						\
+  assert(cur_th == currentThread);						\
+										\
+  /* Clean-up reliable server link */ 						\
+  if										\
+  :: threadIPCServer(cur_th) != THREAD_ID_INVALID ->				\
+       threadWakeup(threadIPCServer(cur_th), WAIT_IPC_SRV_DSCN);		\
+       /* sets rc */								\
+       if									\
+       :: rc != 0 ->								\
+	    assert(cur_th == threadIPCClient(threadIPCServer(cur_th)));		\
+	    ipcCancel_server = threadIPCServer(cur_th);				\
+	    threadSetIPCServer(cur_th, THREAD_ID_INVALID);			\
+	    threadSetIPCClient(ipcCancel_server, THREAD_ID_INVALID);		\
+	    threadReady(ipcCancel_server);					\
+	    									\
+       :: else ->								\
+	    threadWakeup(threadIPCServer(cur_th), WAIT_IPC_PICKLE);		\
+	    /* sets rc */							\
+	    if									\
+	    :: rc != 0 ->							\
+	         assert(threadIPCClient(threadIPCServer(cur_th)) == cur_th);	\
+		 /* ipcPickle nukes the pointers */				\
+		 ipcCancel_server = threadIPCServer(cur_th);			\
+		 ipcPickle(cur_th, ipcCancel_server);				\
+		 threadReady(ipcCancel_server);					\
+            :: else ->								\
+	         assert(rc == 0);						\
+            fi;									\
+       fi;									\
+   :: else ->									\
+       ipcClientUnpickle(cur_th, 1 /* Don't wait */);				\
+       assert(rc == 0);								\
+   fi;										\
+										\
+   /* Cleanup the reliable client link */					\
+   if										\
+   :: threadIPCClient(cur_th) != 0 ->						\
+        threadWakeup(threadIPCClient(cur_th), WAIT_IPC_CLI_DSCN);		\
+	if									\
+	:: rc != 0 ->								\
+	     assert(threadIPCServer(threadIPCClient(cur_th)) == cur_th);	\
+	     ipcCancel_client = threadIPCClient(cur_th);			\
+	     threadSetIPCClient(cur_th, THREAD_ID_INVALID);			\
+	     threadSetIPCServer(ipcCancel_client, THREAD_ID_INVALID);		\
+	     threadReady(ipcCancel_client);					\
+        :: else -> /* XXX not following the C? */				\
+	     assert(threadIPCClient(cur_th) != 0);				\
+	     threadWakeup(threadIPCClient(cur_th), WAIT_IPC_PICKLE);		\
+	     /* sets rc */							\
+	     if									\
+	     :: rc != 0 ->							\
+		  assert(threadIPCServer(threadIPCClient(cur_th)) == cur_th);	\
+		  ipcCancel_client = threadIPCClient(cur_th);			\
+		  ipcPickle(ipcCancel_client, cur_th);				\
+		  threadReady(ipcCancel_client);				\
+	     :: else ->								\
+		  assert(rc == 0);						\
+	     fi;								\
+        fi;									\
+   :: else ->									\
+        ipcServerUnpickle(cur_th, 1 /* Don't wait */);				\
+	assert(rc == 0);							\
+   fi;										\
+   rc = KR_INVALID
+
+
+
+#define threadIpcStateStop(cur_th, stopper)				\
+  assert(cur_th == currentThread);					\
+									\
+  /* Pickle reliable client connection, if one. */			\
+  if									\
+  :: threadIPCClient(cur_th) != THREAD_ID_INVALID ->			\
+       assert(threadIPCServer(threadIPCClient(cur_th)) == cur_th);	\
+       if								\
+       :: threadIPCClient(cur_th) == stopper ->				\
+	    /* XXX */ipcCancel_client = threadIPCClient(cur_th);	\
+    	    ipcPickle(ipcCancel_client, stopper);			\
+	    DONEWITH(ipcCancel_client);					\
+	    rc = 0;							\
+       :: else ->							\
+	  threadWakeup(threadIPCClient(cur_th), WAIT_ANYTHING);		\
+	  /* sets rc */							\
+	  if								\
+	  :: rc != 0 ->							\
+	       ipcCancel_client = threadIPCClient(cur_th);		\
+	       ipcPickle(ipcCancel_client, cur_th);			\
+	       threadReady(ipcCancel_client);				\
+	       DONEWITH(ipcCancel_client);				\
+	       rc = 0;							\
+	  :: else ->							\
+	       threadReady(stopper);					\
+	       threadWait(cur_th, WAIT_IPC_PICKLE,			\
+		          threadIPCClient(cur_th), 0 /* cancel it */);	\
+	       /* RETURN! */ goto ipcStateStop_return;			\
+          fi;								\
+       fi;								\
+  :: else ->       							\
+       assert(threadIPCClient(cur_th) == THREAD_ID_INVALID);		\
+  fi;									\
+									\
+  /* Pickle reliable server connection, if one. */			\
+  if									\
+  :: threadIPCServer(cur_th) != THREAD_ID_INVALID ->			\
+       assert(threadIPCClient(threadIPCServer(cur_th)) == cur_th);	\
+       if								\
+       :: stopper == threadIPCServer(cur_th) ->				\
+	    ipcCancel_server = threadIPCServer(cur_th);			\
+	    ipcPickle(cur_th, ipcCancel_server);			\
+	    DONEWITH(ipcCancel_server);					\
+	    rc = 0;							\
+       :: else ->							\
+	    threadWakeup(threadIPCServer(cur_th), WAIT_ANYTHING);	\
+	    if								\
+	    :: rc != 0 ->						\
+		 ipcCancel_server = threadIPCServer(cur_th);		\
+		 ipcPickle(cur_th, ipcCancel_server);			\
+		 threadReady(ipcCancel_server);				\
+		 DONEWITH(ipcCancel_server);				\
+	    :: else ->							\
+	         /* XXX (bryan) layering violation */			\
+		 condWaitOther(threadStopCond(cur_th), stopper);	\
+		 threadWait(cur_th, WAIT_IPC_PICKLE,			\
+			    threadIPCServer(cur_th), /* cancel it */0);	\
+	         /* RETURN! */ goto ipcStateStop_return;		\
+            fi;								\
+       fi;								\
+  :: else ->								\
+       assert(threadIPCServer(cur_th) == THREAD_ID_INVALID);		\
+  fi;									\
+									\
+  rc = 0;								\
+ipcStateStop_return:							\
+   skip
+
+#endif

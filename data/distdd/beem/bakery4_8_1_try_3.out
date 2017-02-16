@@ -1,0 +1,80 @@
+performing reachability, flags: -n 8 -N 8 -shared-heap 16GB --tablesize=27 --cachesize=26  
+This is upcrun, job spawner for the Berkeley UPC compiler (http://upc.lbl.gov).
+upcrun version 2.22.2
+Network conduits supported by this installation: smp mxm ibv
+[1468074486.261843] [node012:25390:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1891.69
+[1468074486.269790] [node012:25390:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.589928] [node014:23521:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2391.47
+[1468074486.595804] [node014:23521:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.622356] [node016:11579:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1498.69
+[1468074486.628336] [node016:11579:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.616083] [node017:3556 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1496.34
+[1468074486.625096] [node017:3556 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.637923] [node019:17995:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1699.41
+[1468074486.644045] [node019:17995:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.622312] [node013:8007 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1969.97
+[1468074486.630781] [node013:8007 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.613960] [node018:25856:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1689.38
+[1468074486.623005] [node018:25856:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468074486.615204] [node015:14225:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1503.66
+[1468074486.623303] [node015:14225:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+UPCR: UPC thread 0 of 8 on node012 (pshm node 0 of 8, process 0 of 8, pid=25398)
+UPCR: UPC thread 4 of 8 on node016 (pshm node 4 of 8, process 4 of 8, pid=11621)
+UPCR: UPC thread 3 of 8 on node015 (pshm node 3 of 8, process 3 of 8, pid=14267)
+UPCR: UPC thread 5 of 8 on node017 (pshm node 5 of 8, process 5 of 8, pid=3598)
+UPCR: UPC thread 7 of 8 on node019 (pshm node 7 of 8, process 7 of 8, pid=18037)
+UPCR: UPC thread 1 of 8 on node013 (pshm node 1 of 8, process 1 of 8, pid=8050)
+UPCR: UPC thread 6 of 8 on node018 (pshm node 6 of 8, process 6 of 8, pid=25898)
+UPCR: UPC thread 2 of 8 on node014 (pshm node 2 of 8, process 2 of 8, pid=23563)
+using a cache granularity of 8
+using linear probing in the BDD table
+using a memoization table of 2^26 = 67108864 entries (~2560 MB) per thread
+using a BDD table of 2^27 = 134217728 entries (~3072 MB) per thread
+Initializing /home/oortwijn/distdd/models/beem/bakery.4.bdd!
+vector size: 15
+bits per integer: 3
+number of BDD variables: 45
+Loading initial states: 
+Initial states loaded... 
+Loading transition relations... 
+15 integers per state, 3 bits per integer, 24 transition groups
+BDD nodes:
+Initial states: 45 BDD nodes
+Transition 0: 31 BDD nodes
+Transition 1: 656 BDD nodes
+Transition 2: 135 BDD nodes
+Transition 3: 323 BDD nodes
+Transition 4: 305 BDD nodes
+Transition 5: 25 BDD nodes
+Transition 6: 93 BDD nodes
+Transition 7: 28 BDD nodes
+Transition 8: 137 BDD nodes
+Transition 9: 25 BDD nodes
+Transition 10: 122 BDD nodes
+Transition 11: 25 BDD nodes
+Transition 12: 31 BDD nodes
+Transition 13: 1033 BDD nodes
+Transition 14: 923 BDD nodes
+Transition 15: 384 BDD nodes
+Transition 16: 74 BDD nodes
+Transition 17: 28 BDD nodes
+Transition 18: 31 BDD nodes
+Transition 19: 820 BDD nodes
+Transition 20: 761 BDD nodes
+Transition 21: 340 BDD nodes
+Transition 22: 106 BDD nodes
+Transition 23: 28 BDD nodes
+Level 1... done.
+Level 2... done.
+PAR Time: 0.014404
+Final states: 35184372088832 states
+Final states: 0 BDD nodes
+[1468074486.616083] [node017:3556 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1496.34
+[1468074486.613960] [node018:25856:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1689.38
+[1468074486.589928] [node014:23521:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2391.47
+[1468074486.637923] [node019:17995:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1699.41
+[1468074486.615204] [node015:14225:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1503.66
+[1468074486.261843] [node012:25390:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1891.69
+[1468074486.622312] [node013:8007 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1969.97
+[1468074486.622356] [node016:11579:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1498.69
+[1468074486.242840] [node012:25346:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1798.69

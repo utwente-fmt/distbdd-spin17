@@ -1,0 +1,59 @@
+performing reachability, flags: -n 2 -N 1 -shared-heap 8GB --tablesize=26 --cachesize=25 --quadratic-probing--chunk-size=8 
+This is upcrun, job spawner for the Berkeley UPC compiler (http://upc.lbl.gov).
+upcrun version 2.22.2
+Network conduits supported by this installation: smp mxm ibv
+[1467965767.956764] [node054:4975 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2177.06
+[1467965767.968395] [node054:4975 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1467965767.956764] [node054:4975 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2177.06
+[1467965767.967363] [node054:4975 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+UPCR: UPC thread 0 of 2 on node054 (pshm node 0 of 1, process 0 of 2, pid=4976)
+UPCR: UPC thread 1 of 2 on node054 (pshm node 0 of 1, process 1 of 2, pid=4977)
+using a cache granularity of 8
+using linear probing in the BDD table
+using a memoization table of 2^25 = 33554432 entries (~1280 MB) per thread
+using a BDD table of 2^26 = 67108864 entries (~1536 MB) per thread
+Initializing /home/oortwijn/distdd/models/beem/peterson.6.bdd!
+vector size: 20
+bits per integer: 3
+number of BDD variables: 60
+Loading initial states: 
+Initial states loaded... 
+Loading transition relations... 
+20 integers per state, 3 bits per integer, 28 transition groups
+BDD nodes:
+Initial states: 60 BDD nodes
+Transition 0: 108 BDD nodes
+Transition 1: 343 BDD nodes
+Transition 2: 25 BDD nodes
+Transition 3: 176 BDD nodes
+Transition 4: 25 BDD nodes
+Transition 5: 52 BDD nodes
+Transition 6: 28 BDD nodes
+Transition 7: 96 BDD nodes
+Transition 8: 273 BDD nodes
+Transition 9: 54 BDD nodes
+Transition 10: 25 BDD nodes
+Transition 11: 25 BDD nodes
+Transition 12: 170 BDD nodes
+Transition 13: 28 BDD nodes
+Transition 14: 25 BDD nodes
+Transition 15: 54 BDD nodes
+Transition 16: 25 BDD nodes
+Transition 17: 54 BDD nodes
+Transition 18: 182 BDD nodes
+Transition 19: 25 BDD nodes
+Transition 20: 102 BDD nodes
+Transition 21: 583 BDD nodes
+Transition 22: 28 BDD nodes
+Transition 23: 266 BDD nodes
+Transition 24: 25 BDD nodes
+Transition 25: 209 BDD nodes
+Transition 26: 838 BDD nodes
+Transition 27: 28 BDD nodes
+Level 1... done.
+Level 2... done.
+PAR Time: 0.008349
+Final states: 1152921504606846976 states
+Final states: 0 BDD nodes
+[1467965767.956764] [node054:4975 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2177.06
+[1467965767.940872] [node054:4931 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 2096.34

@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) 1996 The University of Utah and
+ * the Computer Systems Laboratory at the University of Utah (CSL).
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify and distribute this software is hereby
+ * granted provided that (1) source code retains these copyright, permission,
+ * and disclaimer notices, and (2) redistributions including binaries
+ * reproduce the notices in supporting documentation, and (3) all advertising
+ * materials mentioning features or use of this software display the following
+ * acknowledgement: ``This product includes software developed by the
+ * Computer Systems Laboratory at the University of Utah.''
+ *
+ * THE UNIVERSITY OF UTAH AND CSL ALLOW FREE USE OF THIS SOFTWARE IN ITS "AS
+ * IS" CONDITION.  THE UNIVERSITY OF UTAH AND CSL DISCLAIM ANY LIABILITY OF
+ * ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ *
+ * CSL requests users of this software to return to csl-dist@cs.utah.edu any
+ * improvements that they make and grant CSL redistribution rights.
+ */
+/*
+ * Reference.pr - Reference-like entities in Promela.
+ */
+
+#ifndef __REFERENCE__
+#define __REFERENCE__
+
+/*-- Reference type -------------------------------------------------------- */
+
+  /* We get reference-like semantics when needed by having global arrays of  */
+  /* other types, and using a Reference to index into the array (via the     */
+  /* deref() "operator" defined below).  Of course it's not terribly pretty  */
+  /* to use, but it at least makes reference semantics explicit to the       */
+  /* reader where they are used.                                             */
+
+#define Reference byte
+
+#define nil 0
+
+/*-- Reference operations -------------------------------------------------- */
+
+  /* referenceInstances() is used to construct the array of instances that   */
+  /* can be accessed by using deref().  Note that this doesn't NECESSARILY   */
+  /* have to be global, but you must ensure that deref cannot be called from */
+  /* a scope that does not know instanceArray, so this means it's usually    */
+  /* global.                                                                 */
+
+#define refDefineInstances(instanceType,instanceArray,numInstances)        \
+  instanceType instanceArray[numInstances]
+
+  /* If deref() didn't have to be an expression, we could assert that        */
+  /* reference is non-nil.  Bummer.  We subtract one from reference, because */
+  /* arrays are zero-based, but zero is defined as nil, since it's the       */
+  /* default initial value for a Reference.  tail is a token to be pasted    */
+  /* onto the end of the resulting value, for example for accessing          */
+  /* elements of a struct that is referred to (since cpp inserts a space     */
+  /* into "deref(a,b).head" before the ".head".                              */
+
+#define deref(reference, instanceArray, tail)                              \
+  instanceArray[reference-1]tail
+
+#endif /* __REFERENCE__ */

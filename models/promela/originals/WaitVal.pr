@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 1996 The University of Utah and
+ * the Computer Systems Laboratory at the University of Utah (CSL).
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify and distribute this software is hereby
+ * granted provided that (1) source code retains these copyright, permission,
+ * and disclaimer notices, and (2) redistributions including binaries
+ * reproduce the notices in supporting documentation, and (3) all advertising
+ * materials mentioning features or use of this software display the following
+ * acknowledgement: ``This product includes software developed by the
+ * Computer Systems Laboratory at the University of Utah.''
+ *
+ * THE UNIVERSITY OF UTAH AND CSL ALLOW FREE USE OF THIS SOFTWARE IN ITS "AS
+ * IS" CONDITION.  THE UNIVERSITY OF UTAH AND CSL DISCLAIM ANY LIABILITY OF
+ * ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ *
+ * CSL requests users of this software to return to csl-dist@cs.utah.edu any
+ * improvements that they make and grant CSL redistribution rights.
+ */
+/*
+ * WaitVal.pr - Enumeration of things that Threads can be waiting for
+ */
+
+#ifndef __WAITVAL__
+#define __WAITVAL__
+
+/*-- WaitVal type -----------------------------------------------------------*/
+
+#define WaitVal int
+
+#define WAIT_NONE                 0 /* 0x00000000 Ready, running, or blocked */
+#define WAIT_ANYTHING            16 /* 0x00000010 Waiting at any clean point */
+#define WAIT_CANCELABLE          24 /* 0x00000018 Waiting at any clean point */
+#define WAIT_ON_COND             56 /* 0x00000038 Waiting on waiting_on cond */
+#define WAIT_IPC_SRV_DSCN        88 /* 0x00000058 in ipc_server_disconnect   */
+#define WAIT_IPC_SRV_RECEIVER   152 /* 0x00000098 as the receiver            */
+#define WAIT_IPC_SRV_SENDER     280 /* 0x00000118 as the sender              */
+#define WAIT_IPC_SRV_ORECV      792 /* 0x00000318 in ipc_server_over_receive */
+#define WAIT_IPC_SRV_RECV      1176 /* 0x00000498 in ipc_server_receive      */
+#define WAIT_IPC_SRV_ASEND     2200 /* 0x00000898 in ipc_server_ack_send     */
+#define WAIT_IPC_SRV_SEND      4376 /* 0x00001118 in ipc_server_send         */
+#define WAIT_IPC_CLI_DSCN      8216 /* 0x00002018 in ipc_client_disconnect   */ 
+#define WAIT_IPC_CLI_RECEIVER 16408 /* 0x00004018 in ipc_client_over_receive */
+#define WAIT_IPC_CLI_SENDER   32792 /* 0x00008018 in ipc_client_over_receive */
+#define WAIT_IPC_CLI_ORECV    98328 /* 0x00018018 in ipc_client_over_receive */
+#define WAIT_IPC_CLI_RECV    147480 /* 0x00024018 in ipc_client_receive      */
+#define WAIT_IPC_CLI_ASEND   278552 /* 0x00044018 in ipc_client_ack_send     */
+#define WAIT_IPC_CLI_SEND    557080 /* 0x00088018 in ipc_client_send         */
+#define WAIT_IPC_PICKLE     1048592 /* 0x00100010 for my conns to be pickled */
+#define WAIT_IPC_UNPICKLE   2097176 /* 0x00200018 for conns to be activated  */
+#define WAIT_IPC_IDEMPOTENT 4194328 /* 0x00400018 making any idem. req.      */
+#define WAIT_IPC_CALL      12582936 /* 0x00c00018 explicit idem. ipc_call    */
+#define WAIT_IPC_EXCEPTION 20971544 /* 0x01400018 idempotent exception IPC   */
+#define WAIT_STOPPED       33554448 /* 0x02000010 Thread is stopped          */
+
+#endif /* __WAITVAL__ */

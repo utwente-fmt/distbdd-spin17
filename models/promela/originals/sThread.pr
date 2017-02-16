@@ -1,0 +1,164 @@
+/*
+ * Copyright (c) 1996 The University of Utah and
+ * the Computer Systems Laboratory at the University of Utah (CSL).
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify and distribute this software is hereby
+ * granted provided that (1) source code retains these copyright, permission,
+ * and disclaimer notices, and (2) redistributions including binaries
+ * reproduce the notices in supporting documentation, and (3) all advertising
+ * materials mentioning features or use of this software display the following
+ * acknowledgement: ``This product includes software developed by the
+ * Computer Systems Laboratory at the University of Utah.''
+ *
+ * THE UNIVERSITY OF UTAH AND CSL ALLOW FREE USE OF THIS SOFTWARE IN ITS "AS
+ * IS" CONDITION.  THE UNIVERSITY OF UTAH AND CSL DISCLAIM ANY LIABILITY OF
+ * ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ *
+ * CSL requests users of this software to return to csl-dist@cs.utah.edu any
+ * improvements that they make and grant CSL redistribution rights.
+ */
+/*
+ * sThread.pr
+ *
+ * Mostly exception stuff.
+ */
+
+#ifndef _CONTROL_STHREAD_PR_
+#define _CONTROL_STHREAD_PR_
+
+#include "ipcCancel.pr"
+
+/*
+ * Define the local variables used by the functions in
+ * this file.
+ */
+#define defineSThreadLocals() \
+  Thread sThread_other
+
+/*
+ *
+ * sThreadException().  This is called only from the "kentry layer", and only
+ * when a thread has to handle an exception.  Note that KR_RESTART requires
+ * no special handling, and doesn't come through here.  Other exceptions require
+ * some action and that is done here.
+ *
+ * In the C this does whatever is necessary to clean up the exception and allow
+ * the syscall to continue.  We just assert that the problem is fixed.
+ */
+#define sThreadException()						\
+  /* switch on the rc */						\
+									\
+  if									\
+  :: rc == KR_CANCEL ->							\
+       sThreadCanceled(currentThread);					\
+       /* RETURN rc from sThreadCanceled() */				\
+  :: rc == KR_PAGE_FAULT ->						\
+       /*								\
+        * XXX should we model task_fault() and fault_exception()?	\
+        * They do some locking, and some idemp IPC....			\
+	*								\
+	* Na ganna dah it now, though.					\
+	*/								\
+									\
+	/*								\
+	 * World's fastest, cleanest most robust page fault		\
+	 * resolution. 							\
+	 */								\
+									\
+	rc = 0;								\
+  :: rc == KR_USER_EXCEPTION ->						\
+	rc = 0;								\
+  :: else ->								\
+       panic("Oh no... \n");						\
+  fi;									\
+  /* RETURN rc */
+
+
+/*
+ * sThreadCancel()
+ *
+ * Cancel the specified thread and wait for it.  If we can wakeup the
+ * thread in WAIT_STOPPED mode then its already canceled and we can
+ * easily capture it.
+ */
+#define sThreadCancel(target)						\
+  /* C: taskObLookup() */						\
+  mutexLock(sobMutexes[target], currentThread);				\
+									\
+  if									\
+  :: currentThread == target ->						\
+       panic("Insanity: trying to thread_cancel(currentThread)\n");	\
+  :: else ->								\
+       assert(currentThread != target);					\
+  fi;									\
+  threadWakeup(target, WAIT_STOPPED);					\
+									\
+  if									\
+  :: rc != 0 ->								\
+       /* Its canceled already. */					\
+       /* Signal to caller that we made it here. */			\
+       threadSetExcStatus(currentThread, target);			\
+									\
+       /* Unlock the sob Mutex */					\
+       mutexUnlock(sobMutexes[target], currentThread)			\
+									\
+       /* Restart the stopped thread. */				\
+       threadReady(target);						\
+       /* RETURN */ rc = 0;						\
+  :: else ->								\
+       threadCancel(target);						\
+       /* will unlock the sob mutex */					\
+       condWait(threadStopCond(target), sobMutexes[target]);		\
+       /* sets rc, return rc */						\
+  fi;
+
+/*
+ * sThreadCanceled()
+ *
+ * Called by thread that notices its cancel pending bit is set.
+ * Cancels various portions of itself (ipc, task, etc.) and
+ * Then signals the stopper, if one.
+ */
+#define sThreadCanceled(cur_thread)					\
+  threadSetWaitCancelPending(cur_thread, 0);				\
+  threadIpcCanceled(cur_thread);					\
+  assert(rc == KR_INVALID);						\
+									\
+  /* C: thread_task_canceled() not needed. */				\
+									\
+  mutexLock(sobMutexes[cur_thread], currentThread);			\
+									\
+  /* C code checks for async exceptions, we don't model those. */	\
+									\
+  /*									\
+   * Check if someone asked us to cancel.				\
+   */									\
+  condWakeup(threadStopCond(cur_thread));				\
+  /* sets rc to id of stopper. */					\
+  if									\
+  :: rc != 0 ->								\
+       mutexUnlock(sobMutexes[cur_thread], currentThread);		\
+       /* Passivate all of our entangling associations. */		\
+       /* C: thread_task_state_stop(), not needed for us */		\
+       sThread_other = rc;						\
+       threadIpcStateStop(cur_thread, sThread_other);			\
+       /* sets rc */							\
+									\
+       if								\
+       :: rc != 0 ->							\
+	    /* RETURN rc */ assert(rc != 0);				\
+       :: else ->							\
+	    assert(rc == 0);						\
+	    threadHandoff(cur_thread, WAIT_STOPPED, sThread_other);	\
+	    /* RETURN rc */						\
+       fi;       							\
+       DONEWITH(sThread_other);						\
+  :: else ->								\
+       /* No one on our stop cond */					\
+       assert(rc == 0);							\
+       mutexUnlock(sobMutexes[cur_thread], currentThread);		\
+       /* RETURN */rc = 0;						\
+  fi;
+
+#endif

@@ -1,0 +1,80 @@
+performing reachability, flags: -n 8 -N 8 -shared-heap 16GB --tablesize=27 --cachesize=26  
+This is upcrun, job spawner for the Berkeley UPC compiler (http://upc.lbl.gov).
+upcrun version 2.22.2
+Network conduits supported by this installation: smp mxm ibv
+[1468145906.979328] [node012:26482:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1597.31
+[1468145906.987662] [node012:26482:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.328807] [node016:1120 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1986.19
+[1468145907.334659] [node016:1120 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.332747] [node019:31690:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1500.28
+[1468145907.338885] [node019:31690:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.336512] [node013:2657 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1797.09
+[1468145907.344986] [node013:2657 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.330934] [node017:21904:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1992.00
+[1468145907.339645] [node017:21904:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.333648] [node015:1668 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1899.75
+[1468145907.342404] [node015:1668 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.315627] [node018:8908 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1689.19
+[1468145907.324673] [node018:8908 :0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+[1468145907.338821] [node014:19709:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1863.38
+[1468145907.344732] [node014:19709:0]         mxm.c:196  MXM  WARN  The 'ulimit -s' on the system is set to 'unlimited'. This may have negative performance implications. Please set the stack size to the default value (10240) 
+UPCR: UPC thread 0 of 8 on node012 (pshm node 0 of 8, process 0 of 8, pid=26490)
+UPCR: UPC thread 2 of 8 on node014 (pshm node 2 of 8, process 2 of 8, pid=19751)
+UPCR: UPC thread 1 of 8 on node013 (pshm node 1 of 8, process 1 of 8, pid=2699)
+UPCR: UPC thread 4 of 8 on node016 (pshm node 4 of 8, process 4 of 8, pid=1162)
+UPCR: UPC thread 5 of 8 on node017 (pshm node 5 of 8, process 5 of 8, pid=21946)
+UPCR: UPC thread 3 of 8 on node015 (pshm node 3 of 8, process 3 of 8, pid=1711)
+UPCR: UPC thread 6 of 8 on node018 (pshm node 6 of 8, process 6 of 8, pid=8950)
+UPCR: UPC thread 7 of 8 on node019 (pshm node 7 of 8, process 7 of 8, pid=31732)
+using a cache granularity of 8
+using linear probing in the BDD table
+using a memoization table of 2^26 = 67108864 entries (~2560 MB) per thread
+using a BDD table of 2^27 = 134217728 entries (~3072 MB) per thread
+Initializing /home/oortwijn/distdd/models/beem/phils.3.bdd!
+vector size: 12
+bits per integer: 2
+number of BDD variables: 24
+Loading initial states: 
+Initial states loaded... 
+Loading transition relations... 
+12 integers per state, 2 bits per integer, 24 transition groups
+BDD nodes:
+Initial states: 24 BDD nodes
+Transition 0: 22 BDD nodes
+Transition 1: 24 BDD nodes
+Transition 2: 24 BDD nodes
+Transition 3: 22 BDD nodes
+Transition 4: 22 BDD nodes
+Transition 5: 24 BDD nodes
+Transition 6: 22 BDD nodes
+Transition 7: 24 BDD nodes
+Transition 8: 22 BDD nodes
+Transition 9: 24 BDD nodes
+Transition 10: 24 BDD nodes
+Transition 11: 22 BDD nodes
+Transition 12: 24 BDD nodes
+Transition 13: 22 BDD nodes
+Transition 14: 22 BDD nodes
+Transition 15: 24 BDD nodes
+Transition 16: 22 BDD nodes
+Transition 17: 24 BDD nodes
+Transition 18: 24 BDD nodes
+Transition 19: 22 BDD nodes
+Transition 20: 24 BDD nodes
+Transition 21: 22 BDD nodes
+Transition 22: 24 BDD nodes
+Transition 23: 22 BDD nodes
+Level 1... done.
+Level 2... done.
+PAR Time: 0.003211
+Final states: 16777216 states
+Final states: 0 BDD nodes
+[1468145907.333648] [node015:1668 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1899.75
+[1468145907.336512] [node013:2657 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1797.09
+[1468145906.979328] [node012:26482:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1597.31
+[1468145907.315627] [node018:8908 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1689.19
+[1468145907.330934] [node017:21904:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1992.00
+[1468145907.338821] [node014:19709:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1863.38
+[1468145907.328807] [node016:1120 :0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1986.19
+[1468145907.332747] [node019:31690:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1500.28
+[1468145906.959944] [node012:26438:0]         sys.c:744  MXM  WARN  Conflicting CPU frequencies detected, using: 1597.31
